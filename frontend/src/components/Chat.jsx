@@ -12,6 +12,8 @@ const Chat = () => {
   const [currentSteps, setCurrentSteps] = useState([]);
   const scrollRef = useRef(null);
 
+  const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : '');
+
   const examplePrompts = [
     { text: "Calculate bill for 250 units", icon: "📊" },
     { text: "How to save electricity?", icon: "💡" },
@@ -41,7 +43,7 @@ const Chat = () => {
       // Simulate step updates for better UX
       setTimeout(() => setCurrentSteps(prev => [...prev, "Analyzing query intent..."]), 800);
 
-      const response = await axios.post('http://localhost:8000/chat', {
+      const response = await axios.post(`${API_URL ? API_URL : ''}/chat`, {
         message: text,
         session_id: 'user-1'
       });

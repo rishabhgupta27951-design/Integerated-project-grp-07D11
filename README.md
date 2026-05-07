@@ -54,6 +54,34 @@ A full-stack, AI-driven energy management assistant built with **React**, **Fast
    npm run dev
    ```
 
+### Docker Deployment
+A Docker Compose setup is included at the repository root.
+
+1. Build and start both services:
+   ```bash
+   docker compose up -d --build
+   ```
+2. The frontend will be available at:
+   ```bash
+   http://localhost
+   ```
+3. The backend API will be available at:
+   ```bash
+   http://localhost:8000
+   ```
+
+> The frontend container proxies `/chat` and `/calculate` to the backend service.
+
+### CI/CD Pipeline
+A GitHub Actions workflow is included at `.github/workflows/ci-cd.yml`.
+
+On every push or pull request to `main` / `master`, the pipeline will:
+- install backend dependencies and verify Python files
+- install frontend dependencies and run the production build
+- build both Docker images for the backend and frontend
+
+No extra configuration is required to enable the workflow, but you can add deployment secrets later for automated cloud deployment.
+
 ## 🧠 How it Works
 The assistant uses a **ReAct (Reason + Act)** pattern. When a user asks a question, the LLM first reasons about the intent. If a calculation is required, it calls a specialized Python tool (e.g., `EnergyCalculator`) to perform the math and then incorporates the result back into the conversation.
 

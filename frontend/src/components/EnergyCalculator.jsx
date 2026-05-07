@@ -7,12 +7,13 @@ const EnergyCalculator = () => {
   const [units, setUnits] = useState('');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : '');
 
   const calculateBill = async () => {
     if (!units || isNaN(units)) return;
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8000/calculate?units=${units}`);
+      const response = await axios.get(`${API_URL ? API_URL : ''}/calculate?units=${units}`);
       // Handle both {result: "..."} and direct string responses
       const rawResult = response.data.result || response.data;
       setResult(rawResult);
